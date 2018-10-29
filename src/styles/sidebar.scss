@@ -40,7 +40,7 @@
       overflow: hidden;
     }
     .svg-icon {
-      margin-right: 16px;
+      margin-right: 6px;
       font-size: 16px;
     }
     .el-menu {
@@ -54,22 +54,22 @@
   }
   .hideSidebar {
     .sidebar-container {
-      width: 50px !important;
+      width: 54px !important;
     }
     .main-container {
-      margin-left: 50px;
+      margin-left: 54px;
     }
     .submenu-title-noDropdown {
-      padding-left: 15px !important;
+      padding-left: 18px !important;
       position: relative;
       .el-tooltip {
-        padding: 0 15px !important;
+        padding: 0 18px !important;
       }
     }
     .el-submenu {
       overflow: hidden;
       &>.el-submenu__title {
-        padding-left: 15px !important;
+        padding-left: 18px !important;
         .el-submenu__icon-arrow {
           display: none;
         }
@@ -128,7 +128,7 @@
 .el-menu--vertical{
   & >.el-menu{
     .svg-icon{
-      margin-right: 16px;
+      margin-right: 6px;
     }
   }
 }

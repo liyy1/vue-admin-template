@@ -1,40 +1,43 @@
 <template>
   <el-menu class="navbar" mode="horizontal">
-    <hamburger :toggle-click="toggleSideBar" :is-active="sidebar.opened" class="hamburger-container"/>
-    <breadcrumb />
-    <el-dropdown class="avatar-container" trigger="click">
-      <div class="avatar-wrapper">
-        <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
-        <i class="el-icon-caret-bottom"/>
+    <div class="headbar headbar-left">
+      <div class="bar-item" @click="toggleSideBar">
+        <svg-icon :icon-class="sidebar.opened ? 'shousuo' : 'zhankai'"/>
       </div>
-      <el-dropdown-menu slot="dropdown" class="user-dropdown">
-        <router-link class="inlineBlock" to="/">
-          <el-dropdown-item>
-            Home
-          </el-dropdown-item>
-        </router-link>
-        <el-dropdown-item divided>
-          <span style="display:block;" @click="logout">LogOut</span>
-        </el-dropdown-item>
-      </el-dropdown-menu>
-    </el-dropdown>
+    </div>
+    <div class="headbar headbar-right">
+      <div class="bar-item">
+        <el-dropdown style="height: 46px">
+          <span class="el-dropdown-link">
+            <icon icon-class="ren"/><font>李玉洋</font><i class="el-icon-arrow-down el-icon--right"/>
+          </span>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item>个人信息</el-dropdown-item>
+            <el-dropdown-item>修改密码</el-dropdown-item>
+            <el-dropdown-item divided>退出</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+      </div>
+      <div class="bar-item">
+        <i class="el-icon-bell"><el-badge is-dot class="item"/></i>
+      </div>
+      <div class="bar-item">
+        <i class="el-icon-share"/>
+      </div>
+      <div class="bar-item" @click="logout">
+        <svg-icon icon-class="exit"/>
+      </div>
+    </div>
   </el-menu>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
-import Breadcrumb from '@/components/Breadcrumb'
-import Hamburger from '@/components/Hamburger'
 
 export default {
-  components: {
-    Breadcrumb,
-    Hamburger
-  },
   computed: {
     ...mapGetters([
-      'sidebar',
-      'avatar'
+      'sidebar'
     ])
   },
   methods: {
@@ -51,43 +54,48 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
+$font-color1: #606266;
+$font-color2: #303133;
 .navbar {
   height: 50px;
   line-height: 50px;
   border-radius: 0px !important;
-  .hamburger-container {
-    line-height: 58px;
-    height: 50px;
+  .headbar{
+    .bar-item{
+      float: left;
+      color: $font-color1;
+      padding: 0px 5px;
+      margin: 0px 10px;
+      height: 48px;
+      border-top: 2px solid transparent;
+      -webkit-transition: all 0.3s;
+      cursor:pointer;
+      .el-dropdown{
+        color: $font-color1;
+      }
+    }
+    .bar-item:hover{
+      color: $font-color2;
+      border-top: 2px solid #303030;
+    }
+    font{
+      padding-left: 5px;
+      font-size: 14px;
+    }
+  }
+  .headbar-left{
     float: left;
-    padding: 0 10px;
+    font-size: 18px;
+  }
+  .headbar-right{
+    float: right;
+    padding-right: 5px;
   }
   .screenfull {
     position: absolute;
     right: 90px;
     top: 16px;
     color: red;
-  }
-  .avatar-container {
-    height: 50px;
-    display: inline-block;
-    position: absolute;
-    right: 35px;
-    .avatar-wrapper {
-      cursor: pointer;
-      margin-top: 5px;
-      position: relative;
-      .user-avatar {
-        width: 40px;
-        height: 40px;
-        border-radius: 10px;
-      }
-      .el-icon-caret-bottom {
-        position: absolute;
-        right: -20px;
-        top: 25px;
-        font-size: 12px;
-      }
-    }
   }
 }
 </style>
