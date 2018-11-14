@@ -9,7 +9,7 @@
       <div class="bar-item">
         <el-dropdown style="height: 46px">
           <span class="el-dropdown-link">
-            <icon icon-class="ren"/><font>李玉洋</font><i class="el-icon-arrow-down el-icon--right"/>
+            <svg-icon icon-class="ren"/><font>李玉洋</font><i class="el-icon-arrow-down el-icon--right"/>
           </span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item>个人信息</el-dropdown-item>

@@ -74,10 +74,7 @@ export const constantRouterMap = [
     component: Layout,
     redirect: '/nested/menu1',
     name: 'Nested',
-    meta: {
-      title: 'Nested',
-      icon: 'nested'
-    },
+    meta: { title: 'Nested', icon: 'nested' },
     children: [
       {
         path: 'menu1',
@@ -126,7 +123,6 @@ export const constantRouterMap = [
       }
     ]
   },
-
   {
     path: 'external-link',
     component: Layout,
@@ -137,12 +133,10 @@ export const constantRouterMap = [
       }
     ]
   },
-
   { path: '*', redirect: '/404', hidden: true }
 ]
 
 export default new Router({
-  // mode: 'history', //后端支持可开
   scrollBehavior: () => ({ y: 0 }),
   routes: constantRouterMap
 })
