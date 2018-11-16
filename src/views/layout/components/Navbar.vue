@@ -58,13 +58,16 @@ $font-color1: #606266;
 $font-color2: #303133;
 .navbar {
   height: 50px;
-  line-height: 50px;
+  line-height: 47px;
+  font-size: 18px;
   border-radius: 0px !important;
+  border-bottom: solid 1px #f6f6f6 !important;
   .headbar{
+    padding: 0px 5px;
     .bar-item{
       float: left;
       color: $font-color1;
-      padding: 0px 5px;
+      padding: 0px 6px;
       margin: 0px 10px;
       height: 48px;
       border-top: 2px solid transparent;
@@ -85,11 +88,9 @@ $font-color2: #303133;
   }
   .headbar-left{
     float: left;
-    font-size: 18px;
   }
   .headbar-right{
     float: right;
-    padding-right: 5px;
   }
   .screenfull {
     position: absolute;
