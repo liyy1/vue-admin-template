@@ -1,15 +1,13 @@
 <template>
   <div class="app-container">
-    <div class="filter-container">
-      <el-form :inline="true" :model="queryParams">
-        <el-input v-model="queryParams.username" class="filter-item" placeholder="用户名" style="width: 200px" @keyup.enter.native="query"/>
-        <el-select v-model="queryParams.region" class="filter-item" placeholder="角色" clearable style="width: 150px">
-          <el-option label="区域一" value="shanghai"/>
-          <el-option label="区域二" value="beijing"/>
-        </el-select>
-        <el-button class="filter-item" type="primary" icon="el-icon-search" @click="query">查询</el-button>
-      </el-form>
-    </div>
+    <el-form ref="form" :inline="true" :model="queryParams" class="filter-container" size="mini">
+      <el-input v-model="queryParams.username" class="filter-item" placeholder="用户名" style="width: 200px" @keyup.enter.native="query"/>
+      <el-select v-model="queryParams.region" class="filter-item" placeholder="角色" clearable style="width: 150px">
+        <el-option label="区域一" value="shanghai"/>
+        <el-option label="区域二" value="beijing"/>
+      </el-select>
+      <el-button class="filter-item" type="primary" icon="el-icon-search" @click="query">查询</el-button>
+    </el-form>
 
     <el-table
       v-loading="listLoading"
