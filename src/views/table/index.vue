@@ -2,9 +2,9 @@
   <div class="app-container">
     <el-form ref="form" :inline="true" :model="queryParams" class="filter-container" size="mini">
       <el-input v-model="queryParams.username" class="filter-item" placeholder="用户名" style="width: 200px" @keyup.enter.native="query"/>
-      <el-select v-model="queryParams.region" class="filter-item" placeholder="角色" clearable style="width: 150px">
-        <el-option label="区域一" value="shanghai"/>
-        <el-option label="区域二" value="beijing"/>
+      <el-select v-model="queryParams.role" class="filter-item" placeholder="角色" clearable style="width: 150px">
+        <el-option label="系统管理员" value="1"/>
+        <el-option label="测试用户" value="2"/>
       </el-select>
       <el-button class="filter-item" type="primary" icon="el-icon-search" @click="query">查询</el-button>
     </el-form>
@@ -17,9 +17,9 @@
       border
       fit
       highlight-current-row>
-      <el-table-column align="center" label="ID" width="60">
+      <el-table-column align="center" label="ID" width="50">
         <template slot-scope="scope">
-          {{ scope.$index }}
+          {{ scope.$index+1 }}
         </template>
       </el-table-column>
       <el-table-column prop="username" label="帐号" />
@@ -64,8 +64,9 @@ export default {
   methods: {
     query() {
       this.listLoading = true
-      getList(this.queryParams).then(response => {
-        this.list = response.data
+      getList(this.queryParams).then(result => {
+        this.list = result.data
+        this.total = result.total
         this.listLoading = false
       })
     },

@@ -41,7 +41,7 @@ export const constantRouterMap = [
       path: 'dashboard',
       component: () => import('@/views/dashboard/index'),
       name: 'Dashboard',
-      meta: { title: 'dashboard', icon: 'exit', noCache: true }
+      meta: { title: 'dashboard', icon: 'home', noCache: true }
     }]
   },
 
@@ -50,19 +50,19 @@ export const constantRouterMap = [
     component: Layout,
     redirect: '/example/table',
     name: 'Example',
-    meta: { title: 'Example', icon: 'example' },
+    meta: { title: 'Example', icon: 'business' },
     children: [
       {
         path: 'table',
         name: 'Table',
         component: () => import('@/views/table/index'),
-        meta: { title: 'Table', icon: 'table' }
+        meta: { title: 'Table', icon: 'info' }
       },
       {
         path: 'tree',
         name: 'Tree',
         component: () => import('@/views/tree/index'),
-        meta: { title: 'Tree', icon: 'tree' }
+        meta: { title: 'Tree', icon: 'rights' }
       }
     ]
   },
@@ -75,7 +75,7 @@ export const constantRouterMap = [
         path: 'index',
         name: 'Form',
         component: () => import('@/views/form/index'),
-        meta: { title: 'Form', icon: 'form' }
+        meta: { title: 'Form', icon: 'system' }
       }
     ]
   },
@@ -85,7 +85,7 @@ export const constantRouterMap = [
     component: Layout,
     redirect: '/nested/menu1',
     name: 'Nested',
-    meta: { title: 'Nested', icon: 'nested' },
+    meta: { title: 'Nested', icon: 'pie' },
     children: [
       {
         path: 'menu1',
@@ -140,7 +140,7 @@ export const constantRouterMap = [
     children: [
       {
         path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-        meta: { title: 'External Link', icon: 'link' }
+        meta: { title: 'External Link', icon: 'chart' }
       }
     ]
   },

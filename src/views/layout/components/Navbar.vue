@@ -68,7 +68,7 @@ export default {
   $font-color2: #303133;
   .navbar {
     height: 50px;
-    line-height: 47px;
+    line-height: 50px;
     font-size: 18px;
     border-radius: 0px !important;
     border-bottom: solid 1px #f6f6f6 !important;
