@@ -17,6 +17,8 @@ function move(amount) {
   document.documentElement.scrollTop = amount
   document.body.parentNode.scrollTop = amount
   document.body.scrollTop = amount
+  // add by liyy on 20181020
+  document.getElementById('app-main').scrollTop = amount
 }
 
 function position() {
