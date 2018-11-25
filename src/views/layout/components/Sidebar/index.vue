@@ -1,16 +1,16 @@
 <template>
   <el-scrollbar wrap-class="scrollbar-wrapper">
     <div class="logo" align="center">
-      <img src="@/assets/404_images/404.png" height="50px" width="auto">
+      <img src="@/assets/404_images/404.png" height="30px" width="auto">
     </div>
     <el-menu
       :show-timeout="200"
       :default-active="$route.path"
       :collapse="isCollapse"
       mode="vertical"
-      background-color="#304156"
-      text-color="#bfcbd9"
-      active-text-color="#409EFF"
+      background-color="#20222A"
+      text-color="#ccc"
+      active-text-color="#5fb878"
       unique-opened="true"
       class="left-menu-container"
     >

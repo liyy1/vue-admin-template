@@ -20,7 +20,7 @@
       highlight-current-row>
       <el-table-column align="center" label="ID" width="60">
         <template slot-scope="scope">
-          {{ scope.$index }}
+          {{ scope.$index + 1 }}
         </template>
       </el-table-column>
       <el-table-column prop="username" label="帐号" />
@@ -118,6 +118,7 @@ export default {
       this.listLoading = true
       getList(this.queryParams).then(response => {
         this.list = response.data
+        this.total = response.total
         this.listLoading = false
       })
     },
