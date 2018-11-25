@@ -35,15 +35,15 @@
       <el-table-column label="操作" align="left" width="150" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button type="primary" size="mini" @click="update(scope.row)">修改</el-button>
-          <el-button v-if="scope.row.delete_flag==0" size="mini" type="danger" @click="delete(scope.row)">删除</el-button>
+          <el-button v-if="scope.row.delete_flag==0" size="mini" type="danger" @click="delete(scope.row.id)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
 
     <pagination v-show="total>0" :total="total" :page.sync="queryParams.page" :limit.sync="queryParams.limit" @pagination="getList" />
 
-    <el-dialog :rules="rules" :title="titleMap[dialogStatus]" :visible.sync="dialogVisible">
-      <el-form ref="dataForm" :model="temp" label-position="left" label-width="70px" style="margin:0px 60px;">
+    <el-dialog :rules="rules" :title="dialogTitle" :visible.sync="dialogVisible">
+      <el-form ref="dataForm" :model="temp" label-position="left" label-width="70px" style="margin:0px 60px;width:500px;">
         <el-form-item label="用户名" prop="username">
           <el-input v-model="temp.username"/>
         </el-form-item>
@@ -64,14 +64,14 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取消</el-button>
-        <el-button type="primary" @click="dialogStatus==='add'?addData():updateData()">保存</el-button>
+        <el-button type="primary" @click="saveData">保存</el-button>
       </div>
     </el-dialog>
   </div>
 </template>
 
 <script>
-import { getList } from '@/api/table'
+import { query, saveUser, deleteUser } from '@/api/table'
 import { parseTime } from '@/utils/index'
 import Pagination from '@/components/Pagination'
 
@@ -97,14 +97,10 @@ export default {
         remark: ''
       },
       dialogVisible: false,
-      dialogStatus: '',
-      titleMap: {
-        update: '修改用户',
-        create: '添加用户'
-      },
+      dialogTitle: '',
       roleMap: [{ key: '1', value: '管理员' }, { key: '2', value: '总经理' }, { key: '3', value: '副总' }],
       rules: {
-        username: [{ required: true, message: '此项内容不能为空！', trigger: 'change' }],
+        username: [{ required: true, message: '此项内容不能为空！', trigger: 'blur' }],
         realname: [{ required: true, message: '此项内容不能为空！', trigger: 'blur' }],
         role: [{ required: true, type: 'date', message: '此项内容不能为空！', trigger: 'change' }]
       }
@@ -116,7 +112,7 @@ export default {
   methods: {
     getList() {
       this.listLoading = true
-      getList(this.queryParams).then(response => {
+      query(this.queryParams).then(response => {
         this.list = response.data
         this.total = response.total
         this.listLoading = false
@@ -141,7 +137,7 @@ export default {
     },
     add() {
       this.resetTemp()
-      this.dialogStatus = 'create'
+      this.dialogTitle = '增加用户'
       this.dialogVisible = true
       this.$nextTick(() => {
         this.$refs['dataForm'].clearValidate()
@@ -149,19 +145,32 @@ export default {
     },
     update(row) {
       this.temp = Object.assign({}, row) // copy obj
-      console.log(this.temp)
       this.temp.createTime = new Date(this.temp.createTime)
-      this.dialogStatus = 'update'
+      this.dialogTitle = '修改用户'
       this.dialogVisible = true
       this.$nextTick(() => {
         this.$refs['dataForm'].clearValidate()
       })
     },
+    saveData() {
+      saveUser(this.temp).then(data => {
+        this.$message({
+          message: '保存用户成功！',
+          type: 'success'
+        })
+        this.dialogVisible = false
+        this.query
+      })
+    },
     delete(id) {
-    },
-    addData() {
-    },
-    updateData() {
+      deleteUser(id).then(data => {
+        this.$message({
+          message: '删除用户成功！',
+          type: 'success'
+        })
+        this.dialogVisible = false
+        this.query
+      })
     }
   }
 }
