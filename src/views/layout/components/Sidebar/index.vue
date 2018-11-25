@@ -1,7 +1,8 @@
 <template>
   <el-scrollbar wrap-class="scrollbar-wrapper">
     <div class="logo" align="center">
-      <img src="@/assets/404_images/404.png" height="30px" width="auto">
+      <span v-if="isCollapse">项</span>
+      <span v-else>项目管理系统</span>
     </div>
     <el-menu
       :show-timeout="200"
