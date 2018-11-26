@@ -18,6 +18,11 @@
     left: 0;
     z-index: 1001;
     overflow: hidden;
+    .logo{
+      width: 100%;
+      height: 50px;
+      background-color: #222222;
+    }
     //reset element-ui css
     .horizontal-collapse-transition {
       transition: 0s width ease-in-out, 0s padding-left ease-in-out, 0s padding-right ease-in-out;
@@ -45,8 +50,10 @@
     }
     .el-menu {
       border: none;
-      height: 100%;
       width: 100% !important;
+    }
+    .left-menu-container {
+      height: calc(100vh - 50px);
     }
     .is-active > .el-submenu__title{
       color: #f4f4f5!important;

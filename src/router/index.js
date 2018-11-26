@@ -40,8 +40,8 @@ export const constantRouterMap = [
     children: [{
       path: 'dashboard',
       component: () => import('@/views/dashboard/index'),
-      name: 'Dashboard',
-      meta: { title: 'dashboard', icon: 'home', noCache: true }
+      name: 'dashboard',
+      meta: { title: '系统首页', icon: 'home', noCache: true }
     }]
   },
 
@@ -50,7 +50,7 @@ export const constantRouterMap = [
     component: Layout,
     redirect: '/example/table',
     name: 'Example',
-    meta: { title: 'Example', icon: 'business' },
+    meta: { title: '业务管理', icon: 'business' },
     children: [
       {
         path: 'table',
@@ -75,7 +75,7 @@ export const constantRouterMap = [
         path: 'index',
         name: 'Form',
         component: () => import('@/views/form/index'),
-        meta: { title: 'Form', icon: 'system' }
+        meta: { title: '系统管理', icon: 'system' }
       }
     ]
   },
@@ -85,7 +85,7 @@ export const constantRouterMap = [
     component: Layout,
     redirect: '/nested/menu1',
     name: 'Nested',
-    meta: { title: 'Nested', icon: 'pie' },
+    meta: { title: '统计分析', icon: 'pie' },
     children: [
       {
         path: 'menu1',
@@ -140,7 +140,7 @@ export const constantRouterMap = [
     children: [
       {
         path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-        meta: { title: 'External Link', icon: 'chart' }
+        meta: { title: '统计报表', icon: 'chart' }
       }
     ]
   },
