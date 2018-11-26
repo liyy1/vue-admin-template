@@ -68,18 +68,17 @@ export default {
   $font-color2: #303133;
   .navbar {
     height: 50px;
-    line-height: 50px;
     font-size: 18px;
     border-radius: 0px !important;
     border-bottom: solid 1px #f6f6f6 !important;
     .headbar{
-      padding: 0px 5px;
       .bar-item{
         float: left;
         color: $font-color1;
         padding: 0px 6px;
         margin: 0px 10px;
         height: 48px;
+        line-height: 48px;
         border-top: 2px solid transparent;
         -webkit-transition: all 0.3s;
         cursor:pointer;
@@ -89,7 +88,7 @@ export default {
       }
       .bar-item:hover{
         color: $font-color2;
-        border-top: 2px solid #303030;
+        border-top: 2px solid $font-color1;
       }
       font{
         padding-left: 5px;

@@ -10,7 +10,7 @@
       </el-form-item>
       <el-form-item prop="password">
         <span class="svg-container">
-          <svg-icon icon-class="password" />
+          <svg-icon icon-class="mima" />
         </span>
         <el-input
           :type="pwdType"
