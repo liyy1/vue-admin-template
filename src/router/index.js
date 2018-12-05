@@ -41,7 +41,7 @@ export const constantRouterMap = [
       path: 'dashboard',
       component: () => import('@/views/dashboard/index'),
       name: 'dashboard',
-      meta: { title: '系统首页', icon: 'home', noCache: true }
+      meta: { title: '系统首页', icon: 'home1', noCache: true }
     }]
   },
 
@@ -50,19 +50,19 @@ export const constantRouterMap = [
     component: Layout,
     redirect: '/example/table',
     name: 'Example',
-    meta: { title: '业务管理', icon: 'business' },
+    meta: { title: '业务管理', icon: 'business1' },
     children: [
       {
         path: 'table',
         name: 'Table',
         component: () => import('@/views/table/index'),
-        meta: { title: 'Table', icon: 'info' }
+        meta: { title: 'Table', icon: 'info1' }
       },
       {
         path: 'tree',
         name: 'Tree',
         component: () => import('@/views/tree/index'),
-        meta: { title: 'Tree', icon: 'rights' }
+        meta: { title: 'Tree', icon: 'rights1' }
       }
     ]
   },
@@ -75,7 +75,7 @@ export const constantRouterMap = [
         path: 'index',
         name: 'Form',
         component: () => import('@/views/form/index'),
-        meta: { title: '系统管理', icon: 'system' }
+        meta: { title: '系统管理', icon: 'setting' }
       }
     ]
   },
@@ -85,7 +85,7 @@ export const constantRouterMap = [
     component: Layout,
     redirect: '/nested/menu1',
     name: 'Nested',
-    meta: { title: '统计分析', icon: 'pie' },
+    meta: { title: '统计分析', icon: 'pie1' },
     children: [
       {
         path: 'menu1',
