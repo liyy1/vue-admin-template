@@ -42,7 +42,7 @@
 
     <pagination v-show="total>0" :total="total" :page.sync="queryParams.page" :limit.sync="queryParams.limit" @pagination="getList" />
 
-    <el-dialog :rules="rules" :title="dialogTitle" :visible.sync="dialogVisible">
+    <el-dialog :rules="rules" :title="dialogTitle" :visible.sync="dialogVisible" custom-class="dialog-right">
       <el-form ref="dataForm" :model="temp" label-position="left" label-width="70px" style="margin:0px 60px;width:500px;">
         <el-form-item label="用户名" prop="username">
           <el-input v-model="temp.username"/>
@@ -71,7 +71,7 @@
 </template>
 
 <script>
-import { query, saveUser, deleteUser } from '@/api/table'
+import { query, saveUser, deleteUser } from '@/api/system/user'
 import { parseTime } from '@/utils/index'
 import Pagination from '@/components/Pagination'
 
@@ -175,3 +175,30 @@ export default {
   }
 }
 </script>
+<style rel="stylesheet/scss" lang="scss">
+  .dialog-right{
+    margin-top: 0 !important;
+    margin-right: 0;
+    height: 100%;
+  }
+  @keyframes dialog-fade-in {
+    0% {
+      transform: translate3d(100%, 0, 0);
+      opacity: 0;
+    }
+    100% {
+      transform: translate3d(0, 0, 0);
+      opacity: 1;
+    }
+  }
+  @keyframes dialog-fade-out {
+    0% {
+      transform: translate3d(0, 0, 0);
+      opacity: 1;
+    }
+    100% {
+      transform: translate3d(100%, 0, 0);
+      opacity: 0;
+    }
+  }
+</style>

@@ -15,6 +15,7 @@
 export default {
   computed: {
     size() {
+      // TODO 不能显示当前的布局大小，如何设置默认的大小
       return this.$store.getters.size
     }
   },

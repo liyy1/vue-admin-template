@@ -27,3 +27,8 @@
     }
   }
 }
+
+//重写card插件的头部样式，减小高度18-15
+.el-card__header{
+ padding: 15px 20px;
+}
