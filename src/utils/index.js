@@ -1,5 +1,5 @@
 /**
- * Created by jiachenpan on 16/11/18.
+ * Created by liyy on 2018/11/18.
  */
 
 export function parseTime(time, cFormat) {
@@ -71,4 +71,10 @@ export function formatTime(time, option) {
 
 export function isExternal(path) {
   return /^(https?:|mailto:|tel:)/.test(path)
+}
+
+export function clearObjValue(obj) {
+  for (const key in obj) {
+    obj[key] = ''
+  }
 }

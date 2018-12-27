@@ -32,3 +32,8 @@
 .el-card__header{
  padding: 15px 20px;
 }
+
+//修改树节点选中时文字的高亮颜色
+.el-tree--highlight-current .el-tree-node.is-current>.el-tree-node__content{
+  color: #29d;
+}

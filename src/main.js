@@ -9,6 +9,7 @@ import store from './store'
 import Cookies from 'js-cookie'
 
 import 'element-ui/lib/theme-chalk/index.css'
+import '@riophae/vue-treeselect/dist/vue-treeselect.min.css'
 import '@/styles/index.scss' // global css
 import '@/icons' // icon
 import '@/permission' // permission control

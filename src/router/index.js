@@ -50,13 +50,19 @@ export const constantRouterMap = [
     component: Layout,
     redirect: '/example/user',
     name: 'Example',
-    meta: { title: '业务管理', icon: 'business1' },
+    meta: { title: '系统管理', icon: 'setting' },
     children: [
       {
         path: 'table',
         name: 'Table',
         component: () => import('@/views/system/user/index'),
         meta: { title: 'Table', icon: 'info1' }
+      },
+      {
+        path: 'dict',
+        name: 'Dict',
+        component: () => import('@/views/system/dict/index'),
+        meta: { title: 'Dict', icon: 'rights1' }
       },
       {
         path: 'tree',
@@ -75,7 +81,7 @@ export const constantRouterMap = [
         path: 'index',
         name: 'Form',
         component: () => import('@/views/form/index'),
-        meta: { title: '系统管理', icon: 'setting' }
+        meta: { title: '业务管理', icon: 'business1' }
       }
     ]
   },

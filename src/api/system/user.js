@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-export function query(params) {
+export function queryUser(params) {
   return request({
     url: '/user/query',
     method: 'get',
@@ -16,10 +16,17 @@ export function saveUser(params) {
   })
 }
 
-export function deleteUser(id) {
+export function deleteUser(id, tag) {
   return request({
     url: '/user/delete',
     method: 'post',
-    params: { id }
+    params: { id, tag }
+  })
+}
+
+export function queryDept() {
+  return request({
+    url: '/dept/query',
+    method: 'post'
   })
 }
