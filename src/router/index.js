@@ -54,15 +54,15 @@ export const constantRouterMap = [
     children: [
       {
         path: 'table',
-        name: 'Table',
+        name: '用户管理',
         component: () => import('@/views/system/user/index'),
-        meta: { title: 'Table', icon: 'info1' }
+        meta: { title: '用户管理', icon: 'info1' }
       },
       {
         path: 'dict',
-        name: 'Dict',
+        name: '数据字典',
         component: () => import('@/views/system/dict/index'),
-        meta: { title: 'Dict', icon: 'rights1' }
+        meta: { title: '数据字典', icon: 'rights1' }
       },
       {
         path: 'tree',

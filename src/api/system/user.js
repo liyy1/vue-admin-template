@@ -30,3 +30,19 @@ export function queryDept() {
     method: 'post'
   })
 }
+
+export function saveDept(params) {
+  return request({
+    url: '/dept/save',
+    method: 'post',
+    params
+  })
+}
+
+export function deleteDept(id) {
+  return request({
+    url: '/dept/delete',
+    method: 'post',
+    params: { id }
+  })
+}

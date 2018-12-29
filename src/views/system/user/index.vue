@@ -1,22 +1,20 @@
 <template>
   <div class="app-container">
     <el-container>
-      <el-aside style="width: 300px">
+      <el-aside style="width: 300px;">
         <el-card>
           <div slot="header">
             <span><svg-icon icon-class="dept"/>&nbsp;部门</span>
             <el-button-group style="float: right;">
               <el-tooltip effect="dark" content="添加" placement="bottom">
-                <i class="el-icon-plus" style="color: #85ce61" @click="addDept(data)"/>
+                <i class="el-icon-plus" style="color: #85ce61" @click="addDept()"/>
               </el-tooltip>
               <el-tooltip effect="dark" content="修改" placement="bottom">
-                <i class="el-icon-edit" style="color:#409EFF;" @click="updateDept(data)"/>
+                <i class="el-icon-edit" style="color:#409EFF;" @click="updateDept()"/>
               </el-tooltip>
               <el-tooltip effect="dark" content="删除" placement="bottom">
                 <i class="el-icon-delete" style="color:#f56c6c;" @click="deleteDept(data)"/>
               </el-tooltip>
-              <!--el-button size="mini" icon="el-icon-plus" @click="() => append(data)"/>
-              <el-button size="mini" icon="el-icon-deleteUser" @click="() => remove(node, data)"/>-->
             </el-button-group>
           </div>
           <div>
@@ -40,17 +38,16 @@
       </el-aside>
       <el-main style="padding: 0 0 0 20px">
         <el-form ref="form" :inline="true" :model="queryParams" class="filter-container" size="mini">
-          <el-input v-model="queryParams.username" class="filter-item" clearable placeholder="用户名" style="width: 200px" @keyup.enter.native="reload"/>
+          <el-input v-model="queryParams.username" class="filter-item" clearable placeholder="用户名" style="width: 200px" @keyup.enter.native="reloadUser"/>
           <el-select v-model="queryParams.role" class="filter-item" placeholder="角色" clearable style="width: 150px">
-            <el-option label="区域一" value="shanghai"/>
-            <el-option label="区域二" value="beijing"/>
+            <el-option v-for="item in roleList" :key="item.id" :label="item.name" :value="item.id"/>
           </el-select>
-          <el-button class="filter-item" type="primary" icon="el-icon-search" @click="reload">查询</el-button>
+          <el-button class="filter-item" type="primary" icon="el-icon-search" @click="reloadUser">查询</el-button>
           <el-button class="filter-item" type="success" icon="el-icon-edit" @click="addUser">新增</el-button>
         </el-form>
 
         <el-table
-          v-loading="listLoading"
+          v-loading="userLoading"
           :data="userList"
           min-height="600"
           element-loading-text="Loading"
@@ -80,45 +77,60 @@
           </el-table-column>
         </el-table>
 
-        <pagination v-show="total>0" :total="total" :page.sync="queryParams.page" :limit.sync="queryParams.limit" @pagination="getUsers" />
+        <pagination v-show="total>0" :total="total" :page.sync="queryParams.page" :limit.sync="queryParams.limit" @pagination="loadUser" />
       </el-main>
     </el-container>
 
-    <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="800px">
-      <el-form ref="userForm" :rules="rules" :model="tempUser" label-position="left" label-width="100px" style="margin:0px 60px;width:500px;">
+    <el-dialog :title="userDialogTitle" :visible.sync="userDialogVisible" width="800px">
+      <el-form ref="userForm" :rules="userRules" :model="userTemp" label-position="left" label-width="100px" style="margin:0px 60px;width:500px;">
         <el-form-item label="用户名" prop="username">
-          <el-input v-model="tempUser.username"/>
+          <el-input v-model="userTemp.username"/>
         </el-form-item>
         <el-form-item label="姓名" prop="realname">
-          <el-input v-model="tempUser.realname"/>
+          <el-input v-model="userTemp.realname"/>
         </el-form-item>
         <el-form-item label="手机" prop="phone">
-          <el-input v-model="tempUser.phone"/>
+          <el-input v-model="userTemp.phone"/>
         </el-form-item>
         <el-form-item label="部门" prop="dept">
-          <treeselect v-model="tempUser.dept" :options="deptList" :default-expand-level="2" class="filter-item" placeholder="请选择"/>
+          <treeselect v-model="userTemp.dept" :options="deptList" :default-expand-level="2" placeholder="请选择"/>
         </el-form-item>
         <el-form-item label="角色" prop="role">
-          <el-select v-model="tempUser.role">
+          <el-select v-model="userTemp.role">
             <el-option v-for="item in roleList" :key="item.id" :label="item.name" :value="item.id"/>
           </el-select>
         </el-form-item>
         <el-form-item label="性别" prop="sex">
-          <el-radio-group v-model="tempUser.sex">
+          <el-radio-group v-model="userTemp.sex">
             <el-radio :label="1">男</el-radio>
             <el-radio :label="2">女</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="部门负责人" prop="isLeader">
-          <el-radio-group v-model="tempUser.isLeader">
+          <el-radio-group v-model="userTemp.isLeader">
             <el-radio :label="1">是</el-radio>
             <el-radio :label="0">否</el-radio>
           </el-radio-group>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取消</el-button>
+        <el-button @click="userDialogVisible = false">取消</el-button>
         <el-button type="primary" @click="saveUser">保存</el-button>
+      </div>
+    </el-dialog>
+
+    <el-dialog :title="deptDialogTitle" :visible.sync="deptDialogVisible" width="600px">
+      <el-form ref="deptForm" :rules="deptRules" :model="deptTemp" label-position="left" label-width="100px" style="margin:0px 60px;width:400px;">
+        <el-form-item label="上级部门">
+          <treeselect v-model="deptTemp.parentId" :options="deptList" :default-expand-level="2" :clearable="false" placeholder="请选择"/>
+        </el-form-item>
+        <el-form-item label="名称" prop="name">
+          <el-input v-model="deptTemp.name"/>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="deptDialogVisible = false">取消</el-button>
+        <el-button type="primary" @click="saveDept">保存</el-button>
       </div>
     </el-dialog>
 
@@ -128,7 +140,7 @@
 <script>
 import Treeselect from '@riophae/vue-treeselect'
 import Pagination from '@/components/Pagination'
-import { queryUser, saveUser, deleteUser, queryDept } from '@/api/system/user'
+import { queryUser, saveUser, deleteUser, queryDept, saveDept, deleteDept } from '@/api/system/user'
 import { queryRole } from '@/api/system/role'
 import { parseTime, clearObjValue } from '@/utils/index'
 import { scrollTo } from '@/utils/scrollTo'
@@ -143,7 +155,7 @@ export default {
       deptLoading: true,
       userList: null,
       total: 10,
-      listLoading: true,
+      userLoading: true,
       queryParams: {
         page: 1,
         limit: 20,
@@ -151,12 +163,10 @@ export default {
         role: '',
         dept: ''
       },
-      tempUser: {},
-      tempDept: {},
-      dialogVisible: false,
-      dialogTitle: '',
-      roleMap: [{ key: '1', value: '管理员' }, { key: '2', value: '总经理' }, { key: '3', value: '副总' }],
-      rules: {
+      userTemp: {},
+      userDialogVisible: false,
+      userDialogTitle: '',
+      userRules: {
         username: [{ required: true, message: '此项内容不能为空！', trigger: 'blur' }],
         realname: [{ required: true, message: '此项内容不能为空！', trigger: 'blur' }],
         phone: [
@@ -165,13 +175,19 @@ export default {
         ],
         dept: [{ required: true, type: 'date', message: '此项内容不能为空！', trigger: 'change' }],
         role: [{ required: true, type: 'date', message: '此项内容不能为空！', trigger: 'change' }]
+      },
+      deptTemp: {},
+      deptDialogVisible: false,
+      deptDialogTitle: '',
+      deptRules: {
+        name: [{ required: true, message: '此项内容不能为空！', trigger: 'blur' }]
       }
     }
   },
   created() {
     this.getDepts()
     this.getRoles()
-    this.reload()
+    this.reloadUser()
   },
   methods: {
     getRoles() {
@@ -189,31 +205,31 @@ export default {
     handleClickNode(data) {
       this.queryParams.dept = data.id
       this.queryParams.page = 1
-      this.getUsers()
+      this.loadUser()
       scrollTo(0, 800)
     },
-    getUsers() {
-      this.listLoading = true
+    loadUser() {
+      this.userLoading = true
       queryUser(this.queryParams).then(response => {
         this.userList = response.data
         this.total = response.total
-        this.listLoading = false
+        this.userLoading = false
       })
     },
-    reload() {
+    reloadUser() {
       this.queryParams.page = 1
       this.queryParams.dept = 1
-      this.$nextTick(function() {
+      this.loadUser()
+      setTimeout(() => {
         this.$refs.tree.setCurrentKey(1)
-      })
-      this.getUsers()
+      }, 500)
     },
     parseTime(data) {
       return parseTime(data)
     },
     resetTempUser() {
-      clearObjValue(this.tempUser)
-      this.tempUser = {
+      clearObjValue(this.userTemp)
+      this.userTemp = {
         id: undefined,
         sex: 1,
         isLeader: 0
@@ -221,17 +237,17 @@ export default {
     },
     addUser() {
       this.resetTempUser()
-      this.dialogTitle = '增加用户'
-      this.dialogVisible = true
+      this.userDialogTitle = '增加用户'
+      this.userDialogVisible = true
       this.$nextTick(() => {
         this.$refs['userForm'].clearValidate()
       })
     },
     updateUser(row) {
       this.resetTempUser()
-      this.tempUser = Object.assign({}, row) // copy obj
-      this.dialogTitle = '修改用户'
-      this.dialogVisible = true
+      this.userTemp = Object.assign({}, row) // copy obj
+      this.userDialogTitle = '修改用户'
+      this.userDialogVisible = true
       this.$nextTick(() => {
         this.$refs['userForm'].clearValidate()
       })
@@ -239,13 +255,13 @@ export default {
     saveUser() {
       this.$refs['userForm'].validate((valid) => {
         if (valid) {
-          saveUser(this.tempUser).then(data => {
+          saveUser(this.userTemp).then(data => {
             this.$message({
               message: '保存用户成功！',
               type: 'success'
             })
-            this.dialogVisible = false
-            this.queryUser()
+            this.userDialogVisible = false
+            this.loadUser()
           })
         } else {
           return false
@@ -258,35 +274,68 @@ export default {
           message: (tag === 1 ? '删除' : '启用') + '用户成功！',
           type: 'success'
         })
-        this.dialogVisible = false
-        this.reload()
+        this.userDialogVisible = false
+        this.loadUser()
       })
     },
-    addDept(data) {
-      const newChild = { id: 1, label: 'testtest', children: [] }
-      if (!data.children) {
-        this.$set(data, 'children', [])
+    addDept() {
+      this.deptTemp = {
+        id: undefined,
+        parentId: this.$refs.tree.getCurrentKey()
       }
-      data.children.push(newChild)
+      this.deptDialogTitle = '增加用户'
+      this.deptDialogVisible = true
+      this.$nextTick(() => {
+        this.$refs['deptForm'].clearValidate()
+      })
     },
-    updateDept(data) {
-      const newChild = { id: 1, label: 'testtest', children: [] }
-      if (!data.children) {
-        this.$set(data, 'children', [])
+    updateDept() {
+      const node = this.$refs.tree.getCurrentNode()
+      this.deptTemp = {
+        id: node.id,
+        name: node.name,
+        parentId: node.parentId
       }
-      data.children.push(newChild)
+      this.deptDialogTitle = '增加用户'
+      this.deptDialogVisible = true
+      this.$nextTick(() => {
+        this.$refs['deptForm'].clearValidate()
+      })
     },
-    deleteDept(node, data) {
-      const parent = node.parent
-      const children = parent.data.children || parent.data
-      const index = children.findIndex(d => d.id === data.id)
-      children.splice(index, 1)
+    saveDept() {
+      this.$refs['deptForm'].validate((valid) => {
+        if (valid) {
+          if (this.deptTemp.parentId === this.deptTemp.id) {
+            this.$message('上级部门不能是本部门！')
+          } else {
+            saveDept(this.deptTemp).then(data => {
+              this.$message({
+                message: '保存部门成功！',
+                type: 'success'
+              })
+              this.deptDialogVisible = false
+              this.getDepts()
+            })
+          }
+        }
+      })
+    },
+    deleteDept() {
+      const node = this.$refs.tree.getCurrentNode()
+      this.$confirm('部门删除后不可恢复, 确认删除"' + node.name + '"?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        deleteDept(node.id).then(data => {
+          this.$message({
+            message: '删除部门成功！',
+            type: 'success'
+          })
+          this.getDepts()
+        })
+      })
     }
   }
 }
 </script>
-<style>
-  .el-tree-node__content{
-    height: 35px;
-  }
-</style>

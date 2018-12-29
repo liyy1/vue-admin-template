@@ -37,3 +37,7 @@
 .el-tree--highlight-current .el-tree-node.is-current>.el-tree-node__content{
   color: #29d;
 }
+//修改tree的行高
+.el-tree-node__content{
+ height: 32px;
+}
