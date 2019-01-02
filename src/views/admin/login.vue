@@ -37,6 +37,9 @@
 </template>
 
 <script>
+import { setToken } from '@/utils/auth'
+import { login } from '@/api/system/system'
+
 export default {
   name: 'Login',
   data() {
@@ -74,7 +77,8 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.$store.dispatch('Login', this.loginForm).then(() => {
+          login(this.loginForm.username.trim(), this.loginForm.password).then(res => {
+            setToken(res.data)
             this.loading = false
             this.$router.push({ path: this.redirect || '/' })
           }).catch(() => {
