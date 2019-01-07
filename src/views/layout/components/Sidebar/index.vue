@@ -2,7 +2,7 @@
   <el-scrollbar wrap-class="scrollbar-wrapper">
     <div class="logo" align="center">
       <span v-if="isCollapse">项</span>
-      <span v-else>项目管理系统</span>
+      <span v-else>Project Manager</span>
     </div>
     <el-menu
       :show-timeout="200"
