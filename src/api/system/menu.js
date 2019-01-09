@@ -1,9 +1,10 @@
 import request from '@/utils/request'
 
-export function queryMenu() {
+export function queryMenu(type) {
   return request({
     url: '/menu/query',
-    method: 'post'
+    method: 'post',
+    params: { type: type }
   })
 }
 

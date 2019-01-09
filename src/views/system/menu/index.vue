@@ -47,7 +47,7 @@
               </el-radio-group>
             </el-form-item>
             <el-form-item v-if="menuPidVisible" label="上级菜单" prop="parentId">
-              <treeselect :disabled="formDisabled" v-model="menuTemp.parentId" :options="selectMenuList" :default-expand-level="2" :clearable="false" placeholder="请选择"/>
+              <treeselect :disabled="formDisabled" v-model="menuTemp.parentId" :disable-branch-nodes="true" :options="selectMenuList" :default-expand-level="2" :clearable="false" placeholder="请选择" @select="onSelectMenu"/>
             </el-form-item>
             <el-form-item label="名称" prop="name">
               <el-input v-model="menuTemp.name"/>
@@ -84,8 +84,6 @@
 </template>
 
 <script>
-// TODO 增加时由子菜单切换成按钮，上级菜单不显示子菜单
-// TODO 增加时由主菜单切换成按钮，上级菜单显示子菜单，但是不能被选中
 import Treeselect from '@riophae/vue-treeselect'
 import { queryMenu, saveMenu, deleteMenu } from '@/api/system/menu'
 export default {
@@ -96,6 +94,8 @@ export default {
       type: 'add', // detail add update
       typeMap: [1, 2, 3],
       menuList: null,
+      selectMenuList1: null,
+      selectMenuList2: null,
       menuTemp: { type: 1, order: 1 },
       menuPidVisible: false,
       menuUrlVisible: false,
@@ -120,23 +120,6 @@ export default {
         })
       }
     },
-    selectMenuList: function() {
-      if (this.menuList) {
-        const menus = JSON.parse(JSON.stringify(this.menuList))
-        if (this.menuType === 2) {
-          return menus.map(function(item, index, input) {
-            item.isDisabled = false
-            item.children = null
-            return item
-          })
-        } else if (this.menuType === 3) {
-          return menus.map(function(item, index, input) {
-            item.isDisabled = true
-            return item
-          })
-        }
-      }
-    },
     formDisabled: function() {
       return this.type === 'detail'
     },
@@ -153,6 +136,13 @@ export default {
     },
     menuType: function() {
       return this.menuTemp.type
+    },
+    selectMenuList: function() {
+      if (this.menuType === 2) {
+        return this.selectMenuList1
+      } else {
+        return this.selectMenuList2
+      }
     }
   },
   watch: {
@@ -182,7 +172,13 @@ export default {
   methods: {
     getMenus() {
       this.menuLoading = true
-      queryMenu().then(response => {
+      queryMenu(1).then(response => {
+        this.selectMenuList1 = response.data
+      })
+      queryMenu(2).then(response => {
+        this.selectMenuList2 = response.data
+      })
+      queryMenu(3).then(response => {
         this.menuList = response.data
         this.menuLoading = false
       })
@@ -204,7 +200,12 @@ export default {
       this.type = 'detail'
       this.resetTempMenu()
       this.menuTemp = JSON.parse(JSON.stringify(data))
-      console.log(this.menuTemp)
+    },
+    onSelectMenu(node, instanceId) {
+      if (this.menuType === 3 && node.type === 1) {
+        console.log('adfadfafd')
+        this.menuTemp.parentId = null
+      }
     },
     addMenu() {
       this.type = 'add'
