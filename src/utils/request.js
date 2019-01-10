@@ -1,6 +1,6 @@
 import axios from 'axios'
+import store from '@/store'
 import { Message, MessageBox } from 'element-ui'
-import { removeToken } from '@/utils/auth'
 
 // 创建axios实例
 const service = axios.create({
@@ -41,8 +41,9 @@ service.interceptors.response.use(
           type: 'warning'
         }
       ).then(() => {
-        removeToken()
-        location.reload() // 为了重新实例化vue-router对象 避免bug
+        store.dispatch('FedLogOut').then(() => {
+          location.reload() // 为了重新实例化vue-router对象 避免bug
+        })
       })
     } else if (res.code === 3) {
       Message.error('您没有权限访问该页面！')

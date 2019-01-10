@@ -37,9 +37,6 @@
 </template>
 
 <script>
-import { setToken } from '@/utils/auth'
-import { login } from '@/api/system/system'
-
 export default {
   name: 'Login',
   data() {
@@ -77,31 +74,9 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          login(this.loginForm).then(res => {
-            setToken(res.data)
-            // TODO 动态加载路由
-            const newRouter = {
-              path: '/form1',
-              name: 'Form1',
-              component: () => import('@/views/layout/Layout'),
-              meta: { title: '业务管理1', icon: 'setting' },
-              children: [
-                {
-                  path: 'index',
-                  name: 'Form1',
-                  component: () => import('@/views/form/index'),
-                  meta: { title: '业务管理1', icon: 'business1' }
-                }
-              ]
-            }
-            console.log(this.$router)
-            this.$router.options.routes.push(newRouter)
-            this.$router.addRoutes([newRouter])
-            console.log(this.$router)
-            this.$router.push('/form1/index')
+          this.$store.dispatch('Login', this.loginForm).then(() => {
             this.loading = false
-            console.log(this.redirect)
-            // this.$router.push({ path: this.redirect || '/' })
+            this.$router.push({ path: this.redirect || '/' })
           }).catch(() => {
             this.loading = false
           })
