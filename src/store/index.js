@@ -21,8 +21,8 @@ export default new Vuex.Store({
     username: state => state.user.username,
     realname: state => state.user.realname,
     phone: state => state.user.phone,
-    deptId: state => state.user.deptId,
-    roleId: state => state.user.roleId,
+    dept: state => state.user.dept,
+    role: state => state.user.role,
     menus: state => state.user.menus
   }
 })

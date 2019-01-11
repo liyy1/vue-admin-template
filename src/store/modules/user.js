@@ -7,9 +7,8 @@ const user = {
     username: '',
     realname: '',
     phone: '',
-    deptId: '',
-    roleId: '',
-    menus: []
+    dept: '',
+    role: ''
   },
 
   mutations: {
@@ -25,23 +24,19 @@ const user = {
     SET_PHONE: (state, phone) => {
       state.phone = phone
     },
-    SET_DEPTID: (state, deptId) => {
-      state.deptId = deptId
+    SET_DEPT: (state, dept) => {
+      state.dept = dept
     },
-    SET_ROLEID: (state, roleId) => {
-      state.roleId = roleId
-    },
-    SET_MENUS: (state, menus) => {
-      state.menus = menus
+    SET_ROLE: (state, role) => {
+      state.role = role
     },
     CLEAR_USER: (state) => {
       state.token = ''
       state.username = ''
       state.realname = ''
       state.phone = ''
-      state.deptId = ''
-      state.roleId = ''
-      state.menus = []
+      state.dept = ''
+      state.role = ''
     }
   },
 
@@ -49,6 +44,7 @@ const user = {
     Login({ commit }, userInfo) {
       return new Promise((resolve, reject) => {
         login(userInfo).then(response => {
+          console.log(response)
           commit('SET_TOKEN', response.data)
           setToken(response.data)
           resolve()
@@ -65,9 +61,8 @@ const user = {
           commit('SET_USERNAME', data.user.username)
           commit('SET_REALNAME', data.user.realname)
           commit('SET_PHONE', data.user.phone)
-          commit('SET_DEPTID', data.user.deptId)
-          commit('SET_ROLEID', data.user.roleId)
-          commit('SET_MENUS', data.menus)
+          commit('SET_DEPT', data.user.dept)
+          commit('SET_ROLE', data.user.role)
           resolve(response)
         }).catch(error => {
           reject(error)

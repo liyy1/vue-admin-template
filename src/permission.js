@@ -12,21 +12,17 @@ router.beforeEach((to, from, next) => {
       next({ path: '/' })
       NProgress.done()
     } else {
-      if (store.getters.menus.length === 0) { // 判断是否已拉取完user_info信息
-        console.log('getUserInfo')
-        store.dispatch('GetUserInfo').then(res => { // 拉取user_info
-          next()
-          // TODO 动态添加路由
-          // this.$router.options.routes.push(newRouter)
-          // this.$router.addRoutes([newRouter])
-          // const roles = res.data.roles // note: roles must be a array! such as: ['editor','develop']
-          // store.dispatch('GenerateRoutes', { roles }).then(() => { // 根据roles权限生成可访问的路由表
-          //   router.addRoutes(store.getters.addRouters) // 动态添加可访问路由表
-          //   next({ ...to, replace: true }) // hack方法 确保addRoutes已完成 ,set the replace: true so the navigation will not leave a history record
-          // })
-        })
-      } else {
+      if (store.getters.role) { // 判断是否已拉取完user_info信息
         next()
+      } else { // 如果store中不存在用户信息，重新拉取并更新路由
+        store.dispatch('GetUserInfo').then(res => {
+          const menus = res.data.menus
+          router.addRoutes(GenerateRoutes(menus)) // 动态添加路由
+          // 初始路由不要加重定向到404路由，否则beforeEach时地址已经变成/404了，而不是刷新之前的页面的地址
+          // 要在每次动态添加路由的时候加上
+          router.addRoutes([{ path: '*', redirect: '/404', hidden: true }])
+          next({ ...to, replace: true })
+        })
       }
     }
   } else {
@@ -42,3 +38,32 @@ router.beforeEach((to, from, next) => {
 router.afterEach(() => {
   NProgress.done()
 })
+
+// 动态添加路由
+function GenerateRoutes(menus) {
+  const ms = []
+  for (const menu of menus) {
+    const m = {}
+    m.name = menu.name
+    m.path = '/' + menu.path
+    m.component = () => import('@/views/layout/Layout')
+    m.meta = { title: menu.name, icon: menu.icon }
+    m.children = GenerateRoutes2(menu.children)
+    router.options.routes.push(m)
+    ms.push(m)
+  }
+  return ms
+}
+
+function GenerateRoutes2(menus) {
+  const ms = []
+  for (const menu of menus) {
+    const m = {}
+    m.name = menu.name
+    m.path = menu.path
+    m.component = () => import('@/views/' + menu.url)
+    m.meta = { title: menu.name, icon: menu.icon }
+    ms.push(m)
+  }
+  return ms
+}

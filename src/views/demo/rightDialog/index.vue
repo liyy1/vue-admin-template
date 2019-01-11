@@ -71,7 +71,7 @@
 </template>
 
 <script>
-import { query, saveUser, deleteUser } from '@/api/system/user'
+import { queryUser, saveUser, deleteUser } from '@/api/system/user'
 import { parseTime } from '@/utils/index'
 import Pagination from '@/components/Pagination'
 
@@ -112,7 +112,7 @@ export default {
   methods: {
     getList() {
       this.listLoading = true
-      query(this.queryParams).then(response => {
+      queryUser(this.queryParams).then(response => {
         this.list = response.data
         this.total = response.total
         this.listLoading = false

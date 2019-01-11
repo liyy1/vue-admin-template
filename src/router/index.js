@@ -19,7 +19,6 @@ import Layout from '../views/layout/Layout'
   }
 **/
 export const constantRouterMap = [
-  { path: '*', redirect: '/404', hidden: true },
   { path: '/login', component: () => import('@/views/admin/login'), hidden: true },
   { path: '/401', component: () => import('@/views/admin/401'), hidden: true },
   { path: '/404', component: () => import('@/views/admin/404'), hidden: true },
@@ -45,51 +44,18 @@ export const constantRouterMap = [
       meta: { title: '系统首页', icon: 'home1', noCache: true }
     }]
   },
-  {
-    path: '/system',
-    name: 'Example',
-    component: Layout,
-    meta: { title: '系统管理', icon: 'setting' },
-    children: [
-      {
-        name: '菜单管理',
-        path: 'menu',
-        component: () => import('@/views/system/menu/index'),
-        meta: { title: '菜单管理', icon: 'info1' }
-      },
-      {
-        name: '用户管理',
-        path: 'user',
-        component: () => import('@/views/system/user/index'),
-        meta: { title: '用户管理', icon: 'info1' }
-      },
-      {
-        name: 'Dict',
-        path: 'dict',
-        component: () => import('@/views/system/dict/index'),
-        meta: { title: '数据字典', icon: 'rights1' }
-      },
-      {
-        path: 'tree',
-        name: 'Tree',
-        component: () => import('@/views/tree/index'),
-        meta: { title: 'Tree', icon: 'rights1' }
-      }
-    ]
-  },
-
-  {
-    path: '/form',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        name: 'Form',
-        component: () => import('@/views/form/index'),
-        meta: { title: '业务管理', icon: 'business1' }
-      }
-    ]
-  },
+  // {
+  //   path: '/form',
+  //   component: Layout,
+  //   children: [
+  //     {
+  //       path: 'index',
+  //       name: 'Form',
+  //       component: () => import('@/views/form/index'),
+  //       meta: { title: '业务管理', icon: 'business1' }
+  //     }
+  //   ]
+  // },
 
   {
     path: '/nested',
