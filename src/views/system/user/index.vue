@@ -140,7 +140,7 @@
 import Treeselect from '@riophae/vue-treeselect'
 import Pagination from '@/components/Pagination'
 import { queryUser, saveUser, deleteUser, queryDept, saveDept, deleteDept } from '@/api/system/user'
-import { queryRole } from '@/api/system/role'
+import { getRoles } from '@/api/system/rights'
 import { parseTime, clearObjValue } from '@/utils/index'
 import { scrollTo } from '@/utils/scrollTo'
 import { validatePhone } from '@/utils/validate'
@@ -190,7 +190,7 @@ export default {
   },
   methods: {
     getRoles() {
-      queryRole().then(response => {
+      getRoles().then(response => {
         this.roleList = response.data
       })
     },
@@ -210,8 +210,8 @@ export default {
     loadUser() {
       this.userLoading = true
       queryUser(this.queryParams).then(response => {
-        this.userList = response.data
-        this.total = response.total
+        this.userList = response.data.rows
+        this.total = response.data.total
         this.userLoading = false
       })
     },
@@ -270,7 +270,7 @@ export default {
     deleteUser(id, tag) {
       deleteUser(id, tag).then(data => {
         this.$message({
-          message: (tag === 1 ? '删除' : '启用') + '用户成功！',
+          message: (tag === 1 ? '禁用' : '启用') + '用户成功！',
           type: 'success'
         })
         this.userDialogVisible = false

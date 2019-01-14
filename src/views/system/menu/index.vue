@@ -3,7 +3,7 @@
     <el-aside>
       <el-card class="tree_menu">
         <div slot="header">
-          <span><svg-icon icon-class="dept"/>&nbsp;菜单</span>
+          <span><svg-icon icon-class="menu"/>&nbsp;菜单</span>
           <el-button-group style="float: right;">
             <el-tooltip effect="dark" content="添加" placement="bottom">
               <i class="el-icon-plus" style="color: #85ce61" @click="addMenu()"/>
@@ -35,7 +35,7 @@
     <el-main style="padding: 0 0 0 15px">
       <el-card>
         <div slot="header">
-          <span><svg-icon icon-class="dept"/>&nbsp;{{ formTitle }}</span>
+          <span><svg-icon icon-class="menu"/>&nbsp;{{ formTitle }}</span>
         </div>
         <div>
           <el-form ref="menuForm" :rules="menuRules" :model="menuTemp" :disabled="formDisabled" label-position="left" label-width="100px" style="margin:0px 60px;width:500px;">
