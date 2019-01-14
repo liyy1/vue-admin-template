@@ -1,3 +1,4 @@
+import Qs from 'qs'
 import axios from 'axios'
 import store from '@/store'
 import { Message, MessageBox } from 'element-ui'
@@ -6,7 +7,11 @@ import { Message, MessageBox } from 'element-ui'
 const service = axios.create({
   baseURL: process.env.BASE_API,
   timeout: 5000, // 请求超时时间
-  withCredentials: true // 跨域请求携带sessionId
+  withCredentials: true, // 跨域请求携带sessionId,
+  transformRequest: [function(data) { // 解决axios post 后台接收不到数据问题
+    return Qs.stringify(data)
+  }],
+  headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
 })
 
 // request拦截器
