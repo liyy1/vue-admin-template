@@ -137,10 +137,9 @@
 </template>
 
 <script>
+import $http from '@/utils/request'
 import Treeselect from '@riophae/vue-treeselect'
 import Pagination from '@/components/Pagination'
-import { queryUser, saveUser, deleteUser, queryDept, saveDept, deleteDept } from '@/api/system/user'
-import { getRoles } from '@/api/system/rights'
 import { parseTime, clearObjValue } from '@/utils/index'
 import { scrollTo } from '@/utils/scrollTo'
 import { validatePhone } from '@/utils/validate'
@@ -190,13 +189,13 @@ export default {
   },
   methods: {
     getRoles() {
-      getRoles().then(response => {
+      $http.get('/role/getRoles').then(response => {
         this.roleList = response.data
       })
     },
     getDepts() {
       this.deptLoading = true
-      queryDept().then(response => {
+      $http.get('/dept/query').then(response => {
         this.deptList = response.data
         this.deptLoading = false
       })
@@ -209,7 +208,7 @@ export default {
     },
     loadUser() {
       this.userLoading = true
-      queryUser(this.queryParams).then(response => {
+      $http.post('/user/query', this.queryParams).then(response => {
         this.userList = response.data.rows
         this.total = response.data.total
         this.userLoading = false
@@ -254,7 +253,7 @@ export default {
     saveUser() {
       this.$refs['userForm'].validate((valid) => {
         if (valid) {
-          saveUser(this.userTemp).then(data => {
+          $http.post('/user/save', this.userTemp).then(data => {
             this.$message({
               message: '保存用户成功！',
               type: 'success'
@@ -268,7 +267,7 @@ export default {
       })
     },
     deleteUser(id, tag) {
-      deleteUser(id, tag).then(data => {
+      $http.post('/user/delete', { id, tag }).then(data => {
         this.$message({
           message: (tag === 1 ? '禁用' : '启用') + '用户成功！',
           type: 'success'
@@ -307,7 +306,7 @@ export default {
           if (this.deptTemp.parentId === this.deptTemp.id) {
             this.$message('上级部门不能是本部门！')
           } else {
-            saveDept(this.deptTemp).then(data => {
+            $http.post('/dept/save', this.deptTemp).then(data => {
               this.$message({
                 message: '保存部门成功！',
                 type: 'success'
@@ -326,7 +325,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        deleteDept(node.id).then(data => {
+        $http.post('/dept/delete', node.id).then(data => {
           this.$message({
             message: '删除部门成功！',
             type: 'success'

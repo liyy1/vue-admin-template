@@ -84,8 +84,8 @@
 </template>
 
 <script>
+import $http from '@/utils/request'
 import Treeselect from '@riophae/vue-treeselect'
-import { queryMenu, saveMenu, deleteMenu } from '@/api/system/menu'
 export default {
   name: 'Menu',
   components: { Treeselect },
@@ -171,16 +171,14 @@ export default {
   },
   methods: {
     getMenus() {
-      this.menuLoading = true
-      queryMenu(1).then(response => {
+      $http.get('/menu/query?type=1').then(response => {
         this.selectMenuList1 = response.data
       })
-      queryMenu(2).then(response => {
+      $http.get('/menu/query?type=2').then(response => {
         this.selectMenuList2 = response.data
       })
-      queryMenu(3).then(response => {
+      $http.get('/menu/query?type=3').then(response => {
         this.menuList = response.data
-        this.menuLoading = false
       })
     },
     resetFormValidate() {
@@ -203,7 +201,6 @@ export default {
     },
     onSelectMenu(node, instanceId) {
       if (this.menuType === 3 && node.type === 1) {
-        console.log('adfadfafd')
         this.menuTemp.parentId = null
       }
     },
@@ -236,7 +233,7 @@ export default {
     saveMenu() {
       this.$refs['menuForm'].validate((valid) => {
         if (valid) {
-          saveMenu(this.menuTemp).then(data => {
+          $http.post('/menu/save', this.menuTemp).then(data => {
             this.$message({
               message: '保存菜单成功！',
               type: 'success'
@@ -255,7 +252,7 @@ export default {
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          deleteMenu(node.id).then(data => {
+          $http.post('/menu/delete', node.id).then(data => {
             this.$message({
               message: '删除菜单成功！',
               type: 'success'

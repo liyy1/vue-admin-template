@@ -1,4 +1,4 @@
-import { login, logout, getUserInfo } from '@/api/system/system'
+import $http from '@/utils/request'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 
 const user = {
@@ -43,8 +43,7 @@ const user = {
   actions: {
     Login({ commit }, userInfo) {
       return new Promise((resolve, reject) => {
-        login(userInfo).then(response => {
-          console.log(response)
+        $http.post('/login', userInfo).then(response => {
           commit('SET_TOKEN', response.data)
           setToken(response.data)
           resolve()
@@ -56,7 +55,7 @@ const user = {
 
     GetUserInfo({ commit, state }) {
       return new Promise((resolve, reject) => {
-        getUserInfo().then(response => {
+        $http.get('/getUserInfo').then(response => {
           const data = response.data
           commit('SET_USERNAME', data.user.username)
           commit('SET_REALNAME', data.user.realname)
@@ -72,7 +71,7 @@ const user = {
     // 登出
     LogOut({ commit, state }) {
       return new Promise((resolve, reject) => {
-        logout(state.token).then(() => {
+        $http.post('/logout', state.token).then(() => {
           commit('CLEAR_USER')
           removeToken()
           resolve()

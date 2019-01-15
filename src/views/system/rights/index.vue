@@ -83,10 +83,9 @@
 </template>
 
 <script>
+import $http from '@/utils/request'
 import Treeselect from '@riophae/vue-treeselect'
 import Pagination from '@/components/Pagination'
-import { queryMenu } from '@/api/system/menu'
-import { queryRole, saveRole, deleteRole, saveRights, getRights } from '@/api/system/rights'
 import { clearObjValue } from '@/utils/index'
 
 export default {
@@ -120,14 +119,14 @@ export default {
   methods: {
     getMenus() {
       this.menuLoading = true
-      queryMenu(3).then(response => {
+      $http.get('/menu/query?type=3').then(response => {
         this.menuList = response.data
         this.menuLoading = false
       })
     },
     loadRole() {
       this.roleLoading = true
-      queryRole(this.queryParams).then(response => {
+      $http.post('/role/query', this.queryParams).then(response => {
         this.roleList = response.data.rows
         this.total = response.data.total
         this.roleLoading = false
@@ -140,7 +139,7 @@ export default {
     handleClickRow(data) {
       this.roleId = data.id
       this.menuLoading = true
-      getRights(this.roleId).then(response => {
+      $http.get('/role/getRights?roleId=' + this.roleId).then(response => {
         this.$refs.tree.setCheckedKeys(response.data)
         this.menuLoading = false
       })
@@ -171,7 +170,7 @@ export default {
     saveRole() {
       this.$refs['roleForm'].validate((valid) => {
         if (valid) {
-          saveRole(this.roleTemp).then(data => {
+          $http.post('/role/save', this.roleTemp).then(data => {
             this.$message({
               message: '保存角色成功！',
               type: 'success'
@@ -185,7 +184,7 @@ export default {
       })
     },
     deleteRole(id, tag) {
-      deleteRole(id, tag).then(data => {
+      $http.post('/role/delete', { id, tag }).then(data => {
         this.$message({
           message: (tag === 1 ? '禁用' : '启用') + '角色成功！',
           type: 'success'
@@ -196,7 +195,7 @@ export default {
     },
     saveRights() {
       const keys = this.$refs.tree.getCheckedKeys()
-      saveRights(this.roleId, JSON.stringify(keys)).then(data => {
+      $http.post('/role/saveRights', { roleId: this.roleId, keys: JSON.stringify(keys) }).then(data => {
         this.$message({
           message: '权限保存成功！',
           type: 'success'

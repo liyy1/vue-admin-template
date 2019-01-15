@@ -71,7 +71,7 @@
 </template>
 
 <script>
-import { queryUser, saveUser, deleteUser } from '@/api/system/user'
+import $http from '@/utils/request'
 import { parseTime } from '@/utils/index'
 import Pagination from '@/components/Pagination'
 
@@ -112,7 +112,7 @@ export default {
   methods: {
     getList() {
       this.listLoading = true
-      queryUser(this.queryParams).then(response => {
+      $http.post('/user/query', this.queryParams).then(response => {
         this.list = response.data
         this.total = response.total
         this.listLoading = false
@@ -153,7 +153,7 @@ export default {
       })
     },
     saveData() {
-      saveUser(this.temp).then(data => {
+      $http.post('/user/save', this.temp).then(data => {
         this.$message({
           message: '保存用户成功！',
           type: 'success'
@@ -163,7 +163,7 @@ export default {
       })
     },
     delete(id) {
-      deleteUser(id).then(data => {
+      $http.post('/user/delete', id).then(data => {
         this.$message({
           message: '删除用户成功！',
           type: 'success'
@@ -175,7 +175,7 @@ export default {
   }
 }
 </script>
-<style rel="stylesheet/scss" lang="scss">
+<style rel="stylesheet/scss" lang="scss" scoped>
   .dialog-right{
     margin-top: 0 !important;
     margin-right: 0;
