@@ -195,7 +195,7 @@ export default {
     },
     saveRights() {
       const keys = this.$refs.tree.getCheckedKeys()
-      $http.post('/role/saveRights', { roleId: this.roleId, keys: JSON.stringify(keys) }).then(data => {
+      $http.post('/role/saveRights', { roleId: this.roleId, menus: JSON.stringify(keys) }).then(data => {
         this.$message({
           message: '权限保存成功！',
           type: 'success'

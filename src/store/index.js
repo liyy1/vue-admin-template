@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import app from './modules/app'
 import user from './modules/user'
 import tagsView from './modules/tagsView'
+import customer from './modules/customer'
 
 Vue.use(Vuex)
 
@@ -10,7 +11,8 @@ export default new Vuex.Store({
   modules: {
     app,
     user,
-    tagsView
+    tagsView,
+    customer
   },
   getters: {
     sidebar: state => state.app.sidebar,

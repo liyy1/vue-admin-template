@@ -44,19 +44,6 @@ export const constantRouterMap = [
       meta: { title: '系统首页', icon: 'home1', noCache: true }
     }]
   },
-  // {
-  //   path: '/form',
-  //   component: Layout,
-  //   children: [
-  //     {
-  //       path: 'index',
-  //       name: 'Form',
-  //       component: () => import('@/views/form/index'),
-  //       meta: { title: '业务管理', icon: 'business1' }
-  //     }
-  //   ]
-  // },
-
   {
     path: '/nested',
     component: Layout,
@@ -108,16 +95,6 @@ export const constantRouterMap = [
         path: 'menu2',
         component: () => import('@/views/nested/menu2/index'),
         meta: { title: 'menu2' }
-      }
-    ]
-  },
-  {
-    path: 'external-link',
-    component: Layout,
-    children: [
-      {
-        path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-        meta: { title: '统计报表', icon: 'chart' }
       }
     ]
   }
