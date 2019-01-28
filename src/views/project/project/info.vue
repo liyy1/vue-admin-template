@@ -164,7 +164,7 @@ export default {
     saveData() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
-          $http.post('/customer/save', { customer: JSON.stringify(this.data) }).then(data => {
+          $http.post('/customer/save', { id: this.data.id, customer: JSON.stringify(this.data) }).then(data => {
             this.$notify({
               title: '成功',
               message: '保存客户信息成功！',

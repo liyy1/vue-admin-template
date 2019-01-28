@@ -94,6 +94,7 @@ export default {
       type: 'add', // detail add update
       typeMap: [1, 2, 3],
       menuList: null,
+      menuLoading: false,
       selectMenuList1: null,
       selectMenuList2: null,
       menuTemp: { type: 1, order: 1 },
@@ -171,6 +172,7 @@ export default {
   },
   methods: {
     getMenus() {
+      this.menuLoading = true
       $http.get('/menu/query?type=1').then(response => {
         this.selectMenuList1 = response.data
       })
@@ -179,6 +181,7 @@ export default {
       })
       $http.get('/menu/query?type=3').then(response => {
         this.menuList = response.data
+        this.menuLoading = false
       })
     },
     resetFormValidate() {

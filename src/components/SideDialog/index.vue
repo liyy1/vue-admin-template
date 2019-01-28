@@ -203,7 +203,7 @@ export default {
       }
     }
     .el-dialog__body{
-      padding: 0;
+      padding: 10px 20px;
       overflow: auto;
       height: calc(100vh - 112px);
       .el-row{
@@ -212,7 +212,7 @@ export default {
           .el-form-item{
             margin-bottom: 5px;
             .el-card__body{
-              padding: 5px 0px;
+              padding: 10px;
               .el-col{ padding: 10px; border: 0}
             }
           }
@@ -224,7 +224,6 @@ export default {
       width: 100%;
       padding: 10px 20px;
       border-top: 1px solid #ebebf0;
-      //box-shadow: 0 -1px 12px 0 rgba(0,0,0,.1);
     }
   }
   .sideDialog-fade-enter-active, .sideDialog-fade-leave-active {

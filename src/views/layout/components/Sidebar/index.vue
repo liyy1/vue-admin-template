@@ -10,7 +10,7 @@
       :unique-opened="true"
       :collapse="isCollapse"
       mode="vertical"
-      background-color="#20222A"
+      background-color="#3A3D49"
       text-color="#ccc"
       active-text-color="#5fb878"
       class="left-menu-container"

@@ -4,6 +4,7 @@
       <div class="bar-item" @click="toggleSideBar">
         <svg-icon :icon-class="sidebar.opened ? 'shousuo' : 'zhankai'"/>
       </div>
+      <breadcrumb class="breadcrumb-container"/>
     </div>
     <div class="headbar headbar-right">
       <div class="bar-item">
@@ -39,10 +40,12 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import Breadcrumb from '@/components/Breadcrumb'
 import SizeSelect from '@/components/SizeSelect'
 
 export default {
   components: {
+    Breadcrumb,
     SizeSelect
   },
   computed: {
@@ -70,8 +73,12 @@ export default {
     height: 50px;
     font-size: 18px;
     border-radius: 0px !important;
-    border-bottom: solid 1px #f6f6f6 !important;
+    box-shadow: 0 1px 4px rgba(0,21,41,.08);
     .headbar{
+      padding: 0px 10px;
+      .breadcrumb-container{
+        float: left;
+      }
       .bar-item{
         float: left;
         color: $font-color1;

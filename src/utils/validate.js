@@ -4,7 +4,7 @@ export const rule_required2 = { required: true, message: '此项内容不能为�
 export const rule_phone = { validator: validatePhone, trigger: 'blur' }
 
 /* 验证手机号码 */
-function validatePhone(rule, value, callback) {
+export function validatePhone(rule, value, callback) {
   if (value != null && value !== '') {
     const regex = /^1[34578]\d{9}$/
     if (!regex.test(value)) {
