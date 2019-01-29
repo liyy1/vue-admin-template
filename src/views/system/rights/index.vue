@@ -1,5 +1,5 @@
 <template>
-  <el-row :gutter="20">
+  <el-row :gutter="20" style="padding: 15px;">
     <el-col :span="18">
       <el-card>
         <div>
@@ -38,7 +38,7 @@
       </el-card>
     </el-col>
     <el-col :span="6">
-      <el-card class="tree_menu">
+      <el-card>
         <div slot="header">
           <span><svg-icon icon-class="menu"/>&nbsp;菜单</span>
           <el-button-group style="float: right;">
@@ -205,17 +205,3 @@ export default {
   }
 }
 </script>
-<style rel="stylesheet/scss" lang="scss">
-  .el-container{
-    height: 100%;
-    .el-aside{
-      width: 300px;
-      .tree_menu{
-        .el-card__body{
-          max-height: calc(100vh - 140px);;
-          overflow: auto;
-        }
-      }
-    }
-  }
-</style>

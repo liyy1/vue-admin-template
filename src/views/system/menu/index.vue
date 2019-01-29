@@ -1,7 +1,7 @@
 <template>
   <el-container>
     <el-aside>
-      <el-card class="tree_menu">
+      <el-card>
         <div slot="header">
           <span><svg-icon icon-class="menu"/>&nbsp;菜单</span>
           <el-button-group style="float: right;">
@@ -270,17 +270,12 @@ export default {
   }
 }
 </script>
-<style rel="stylesheet/scss" lang="scss">
+<style rel="stylesheet/scss" lang="scss" scoped>
   .el-container{
+    padding: 15px;
     height: 100%;
     .el-aside{
       width: 300px;
-      .tree_menu{
-        .el-card__body{
-          max-height: calc(100vh - 140px);
-          overflow: auto;
-        }
-      }
     }
   }
 </style>

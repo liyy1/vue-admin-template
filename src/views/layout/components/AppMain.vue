@@ -1,5 +1,5 @@
 <template>
-  <section id="app-main" class="app-main">
+  <section class="app-main">
     <transition name="fade-transform" mode="out-in">
       <router-view/>
     </transition>
@@ -15,10 +15,7 @@ export default {
 </script>
 <style rel="stylesheet/scss" lang="scss">
   .app-main{
-    height: calc(100vh - 55px);
-    width: 100%;
-    overflow-y: auto;
-    padding: 15px;
-    background-color: #f4f4f5;
+    height: 100%;
+    padding-top: 55px;
   }
 </style>

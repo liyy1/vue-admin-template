@@ -5,6 +5,11 @@
     transition: margin-left .28s;
     margin-left: 220px;
     position: relative;
+    background-color: #f4f4f5;
+    .navbar{
+      width: calc(100vw - 220px);
+      transition: width .28s;
+    }
   }
   // 侧边栏
   .sidebar-container {
@@ -72,6 +77,9 @@
     }
     .main-container {
       margin-left: 60px;
+      .navbar{
+        width: calc(100vw - 60px);
+      }
     }
     .submenu-title-noDropdown {
       padding-left: 20px !important;

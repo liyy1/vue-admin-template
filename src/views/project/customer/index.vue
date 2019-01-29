@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="padding: 15px;">
     <el-card shadow="never">
       <div slot="header">
         <span slot="title">客户列表</span>
