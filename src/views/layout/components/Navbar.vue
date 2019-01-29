@@ -70,10 +70,10 @@ export default {
   $font-color1: #606266;
   $font-color2: #303133;
   .navbar {
-    height: 50px;
+    height: 55px;
     font-size: 18px;
     border-radius: 0px !important;
-    box-shadow: 0 1px 4px rgba(0,21,41,.08);
+    box-shadow: 0 2px 4px rgba(0,21,41,.08);
     .headbar{
       padding: 0px 10px;
       .breadcrumb-container{
@@ -82,10 +82,10 @@ export default {
       .bar-item{
         float: left;
         color: $font-color1;
-        padding: 0px 6px;
-        margin: 0px 10px;
-        height: 48px;
-        line-height: 48px;
+        padding: 0px 8px;
+        margin: 0px 8px;
+        height: 53px;
+        line-height: 53px;
         border-top: 2px solid transparent;
         -webkit-transition: all 0.3s;
         cursor:pointer;

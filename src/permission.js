@@ -44,7 +44,7 @@ function GenerateRoutes(menus) {
   const ms = []
   for (const menu of menus) {
     const m = {}
-    m.name = menu.name
+    m.name = (menu.children.length > 1) ? menu.name : undefined
     m.path = '/' + menu.path
     m.component = () => import('@/views/layout/Layout')
     m.meta = { title: menu.name, icon: menu.icon }

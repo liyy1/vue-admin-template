@@ -10,10 +10,10 @@
       :unique-opened="true"
       :collapse="isCollapse"
       mode="vertical"
+      class="left-menu-container"
       background-color="#3A3D49"
       text-color="#ccc"
       active-text-color="#5fb878"
-      class="left-menu-container"
     >
       <sidebar-item v-for="route in routes" :key="route.path" :item="route" :base-path="route.path"/>
     </el-menu>

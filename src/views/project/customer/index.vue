@@ -1,51 +1,56 @@
 <template>
-  <el-card>
-    <div>
-      <el-form ref="form" :inline="true" :model="queryParams" class="filter-container" size="mini">
-        <el-input v-model="queryParams.name" class="filter-item" clearable placeholder="客户名称" style="width: 200px" @keyup.enter.native="reloadCustomer"/>
-        <treeselect v-model="queryParams.dept" :options="deptList" :default-expand-level="2" style="width: 200px" class="filter-item" placeholder="部门"/>
-        <el-input v-model="queryParams.user" class="filter-item" clearable placeholder="增加人" style="width: 150px" @keyup.enter.native="reloadCustomer"/>
-        <el-button class="filter-item" type="primary" icon="el-icon-search" @click="reloadCustomer">查询</el-button>
-        <el-button class="filter-item" type="success" icon="el-icon-edit" @click="addCustomer">新增</el-button>
-      </el-form>
-
-      <el-table
-        v-loading="customerLoading"
-        :data="customerList"
-        min-height="600"
-        element-loading-text="Loading"
-        border
-        highlight-current-row>
-        <el-table-column align="center" label="ID" width="60">
-          <template slot-scope="scope">
-            {{ scope.$index + 1 }}
-          </template>
-        </el-table-column>
-        <el-table-column prop="name" label="客户名称">
-          <template slot-scope="scope">
-            <span class="link-type" @click="viewCustomer(scope.row.id)">{{ scope.row.name }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column prop="addr" label="地址" />
-        <el-table-column prop="industry" label="行业" />
-        <el-table-column prop="tel" label="联系电话" />
-        <el-table-column align="center" prop="grade" label="客户等级" width="200">
-          <template slot-scope="scope">
-            <el-rate v-model="scope.row.grade"/>
-          </template>
-        </el-table-column>
-        <el-table-column prop="realname" label="创建人" />
-        <el-table-column label="操作" align="left" width="150" class-name="small-padding fixed-width">
-          <template slot-scope="scope">
-            <el-button type="primary" size="mini" @click="updateCustomer(scope.row.id)">修改</el-button>
-            <el-button v-if="scope.row.delete_flag==0" size="mini" type="danger" @click="deleteCustomer(scope.row.id,1)">删除</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-      <pagination v-show="total>0" :total="total" :page.sync="queryParams.page" :limit.sync="queryParams.limit" @pagination="loadCustomer" />
-    </div>
-    <CustomerDialog :type="dialogType" :data="data" @reLoadList="loadCustomer"/>
-  </el-card>
+  <div>
+    <el-card shadow="never">
+      <div slot="header">
+        <span slot="title">客户列表</span>
+      </div>
+      <div>
+        <el-form ref="form" :inline="true" :model="queryParams" class="filter-container" size="mini">
+          <el-input v-model="queryParams.name" class="filter-item" clearable placeholder="客户名称" style="width: 200px" @keyup.enter.native="reloadCustomer"/>
+          <treeselect v-model="queryParams.dept" :options="deptList" :default-expand-level="2" style="width: 200px" class="filter-item" placeholder="部门"/>
+          <el-input v-model="queryParams.user" class="filter-item" clearable placeholder="增加人" style="width: 150px" @keyup.enter.native="reloadCustomer"/>
+          <el-button class="filter-item" type="primary" icon="el-icon-search" @click="reloadCustomer">查询</el-button>
+          <el-button class="filter-item" type="success" icon="el-icon-edit" @click="addCustomer">新增</el-button>
+        </el-form>
+      </div>
+      <div>
+        <el-table
+          v-loading="customerLoading"
+          :data="customerList"
+          min-height="600"
+          element-loading-text="Loading"
+          highlight-current-row>
+          <el-table-column align="center" label="ID" width="60">
+            <template slot-scope="scope">
+              {{ scope.$index + 1 }}
+            </template>
+          </el-table-column>
+          <el-table-column prop="name" label="客户名称">
+            <template slot-scope="scope">
+              <span class="link-type" @click="viewCustomer(scope.row.id)">{{ scope.row.name }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column prop="addr" label="地址" />
+          <el-table-column prop="industry" label="行业" />
+          <el-table-column prop="tel" label="联系电话" />
+          <el-table-column align="center" prop="grade" label="客户等级" width="200">
+            <template slot-scope="scope">
+              <el-rate v-model="scope.row.grade"/>
+            </template>
+          </el-table-column>
+          <el-table-column prop="realname" label="创建人" />
+          <el-table-column label="操作" align="left" width="150" class-name="small-padding fixed-width">
+            <template slot-scope="scope">
+              <el-button type="primary" size="mini" @click="updateCustomer(scope.row.id)">修改</el-button>
+              <el-button v-if="scope.row.delete_flag==0" size="mini" type="danger" @click="deleteCustomer(scope.row.id,1)">删除</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+        <pagination v-show="total>0" :total="total" :page.sync="queryParams.page" :limit.sync="queryParams.limit" @pagination="loadCustomer" />
+      </div>
+      <CustomerDialog :type="dialogType" :data="data" @reLoadList="loadCustomer"/>
+    </el-card>
+  </div>
 </template>
 
 <script>

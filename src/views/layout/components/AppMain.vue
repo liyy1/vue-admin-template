@@ -15,8 +15,7 @@ export default {
 </script>
 <style rel="stylesheet/scss" lang="scss">
   .app-main{
-    /*50 = navbar height 50px */
-    height: calc(100vh - 50px);
+    height: calc(100vh - 55px);
     width: 100%;
     overflow-y: auto;
     padding: 15px;

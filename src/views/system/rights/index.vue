@@ -212,7 +212,7 @@ export default {
       width: 300px;
       .tree_menu{
         .el-card__body{
-          max-height: calc(100vh - 170px);;
+          max-height: calc(100vh - 140px);;
           overflow: auto;
         }
       }
