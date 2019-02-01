@@ -8,7 +8,8 @@ const user = {
     realname: '',
     phone: '',
     dept: '',
-    role: ''
+    role: '',
+    buttons: []
   },
 
   mutations: {
@@ -30,6 +31,9 @@ const user = {
     SET_ROLE: (state, role) => {
       state.role = role
     },
+    SET_BUTTONS: (state, buttons) => {
+      state.buttons = buttons
+    },
     CLEAR_USER: (state) => {
       state.token = ''
       state.username = ''
@@ -37,6 +41,7 @@ const user = {
       state.phone = ''
       state.dept = ''
       state.role = ''
+      state.buttons = []
     }
   },
 
@@ -62,6 +67,7 @@ const user = {
           commit('SET_PHONE', data.user.phone)
           commit('SET_DEPT', data.user.dept)
           commit('SET_ROLE', data.user.role)
+          commit('SET_BUTTONS', data.buttons)
           resolve(response)
         }).catch(error => {
           reject(error)

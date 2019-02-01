@@ -44,8 +44,10 @@ function GenerateRoutes(menus) {
   const ms = []
   for (const menu of menus) {
     const m = {}
+    m.grade = 1
     m.name = (menu.children.length > 1) ? menu.name : undefined
     m.path = '/' + menu.path
+    m.redirect = menu.redirect
     m.component = () => import('@/views/layout/Layout')
     m.meta = { title: menu.name, icon: menu.icon }
     m.children = GenerateRoutes2(menu.children)
@@ -61,9 +63,30 @@ function GenerateRoutes2(menus) {
     const m = {}
     m.name = menu.name
     m.path = menu.path
+    m.redirect = menu.redirect
     m.component = () => import('@/views/' + menu.url)
     m.meta = { title: menu.name, icon: menu.icon }
+    const children = GenerateRoutes3(menu.children)
+    if (children.length > 0) {
+      m.children = children
+    }
     ms.push(m)
+  }
+  return ms
+}
+
+function GenerateRoutes3(menus) {
+  const ms = []
+  for (const menu of menus) {
+    if (menu.type === 3) {
+      const m = {}
+      m.hidden = true
+      m.name = menu.name
+      m.path = menu.path
+      m.meta = { title: menu.name }
+      m.component = () => import('@/views/' + menu.url)
+      ms.push(m)
+    }
   }
   return ms
 }

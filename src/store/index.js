@@ -21,6 +21,7 @@ export default new Vuex.Store({
     phone: state => state.user.phone,
     dept: state => state.user.dept,
     role: state => state.user.role,
-    menus: state => state.user.menus
+    menus: state => state.user.menus,
+    buttons: state => state.user.buttons
   }
 })

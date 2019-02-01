@@ -13,6 +13,7 @@ import '@riophae/vue-treeselect/dist/vue-treeselect.min.css'
 import '@/styles/index.scss' // global css
 import '@/icons' // icon
 import '@/permission' // permission control
+import '@/utils/btnPermission.js' // btn permission control
 
 Vue.use(ElementUI, {
   size: Cookies.get('size') || 'medium'

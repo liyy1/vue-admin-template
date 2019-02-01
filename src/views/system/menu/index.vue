@@ -38,36 +38,55 @@
           <span><svg-icon icon-class="menu"/>&nbsp;{{ formTitle }}</span>
         </div>
         <div>
-          <el-form ref="menuForm" :rules="menuRules" :model="menuTemp" :disabled="formDisabled" label-position="left" label-width="100px" style="margin:0px 60px;width:500px;">
-            <el-form-item label="类型" prop="type">
+          <el-form ref="menuForm" :rules="menuRules" :model="menuTemp" :disabled="formDisabled" label-position="left" label-width="100px" style="margin:0px 60px;width:560px;">
+            <el-form-item label="type" prop="type">
               <el-radio-group :disabled="typeDisabled" v-model="menuTemp.type" size="small">
-                <el-radio :label="typeMap[0]" border>主菜单</el-radio>
-                <el-radio :label="typeMap[1]" border>子菜单</el-radio>
-                <el-radio :label="typeMap[2]" border>按钮</el-radio>
+                <el-tooltip content="一级路由为根路由，默认为Layout组件，必须包含二级路由" placement="top">
+                  <el-radio :label="typeMap[0]" border>一级路由</el-radio>
+                </el-tooltip>
+                <el-tooltip content="二级路由会作为菜单显示，如果只有一个二级路由，SideBar不会显示父级菜单" placement="top">
+                  <el-radio :label="typeMap[1]" border>二级路由</el-radio>
+                </el-tooltip>
+                <el-tooltip content="三级路由不作为菜单显示" placement="top">
+                  <el-radio :label="typeMap[2]" border>三级路由</el-radio>
+                </el-tooltip>
+                <el-tooltip content="权限按钮，不允许重复" placement="top">
+                  <el-radio :label="typeMap[3]" border>按钮</el-radio>
+                </el-tooltip>
               </el-radio-group>
             </el-form-item>
-            <el-form-item v-if="menuPidVisible" label="上级菜单" prop="parentId">
-              <treeselect :disabled="formDisabled" v-model="menuTemp.parentId" :disable-branch-nodes="true" :options="selectMenuList" :default-expand-level="2" :clearable="false" placeholder="请选择" @select="onSelectMenu"/>
+            <el-form-item v-if="menuPidVisible" label="parent" prop="parentId">
+              <treeselect
+                :disabled="formDisabled"
+                v-model="menuTemp.parentId"
+                :disable-branch-nodes="true"
+                :options="selectMenuList"
+                :default-expand-level="2"
+                :clearable="false"
+                :max-height="200"
+                placeholder="请选择"
+                @select="onSelectMenu"/>
             </el-form-item>
-            <el-form-item label="名称" prop="name">
-              <el-input v-model="menuTemp.name"/>
+            <el-form-item label="name" prop="name">
+              <el-input v-model="menuTemp.name" placeholder="路由名称和面包屑标题"/>
             </el-form-item>
-            <el-form-item label="路径" prop="path">
-              <el-input v-model="menuTemp.path">
-                <template slot="prepend">/</template>
-              </el-input>
+            <el-form-item label="path" prop="path">
+              <el-input v-model="menuTemp.path" placeholder="路由地址,根路由需要加前缀'/'"/>
             </el-form-item>
-            <el-form-item v-if="menuUrlVisible" label="组件路径" prop="url">
-              <el-input v-model="menuTemp.url">
+            <el-form-item v-if="menuUrlVisible" label="component" prop="url">
+              <el-input v-model="menuTemp.url" placeholder="对应组件的地址">
                 <template slot="prepend">src/views/</template>
               </el-input>
             </el-form-item>
-            <el-form-item v-if="menuIconVisible" label="图标" prop="icon">
-              <el-input v-model="menuTemp.icon" placeholder="请输入内容">
+            <el-form-item v-if="menuRedirectVisible" label="redirect" prop="redirect">
+              <el-input v-model="menuTemp.redirect" placeholder="重定向地址，如果存在下级路由必须填写,需要加前缀'/'"/>
+            </el-form-item>
+            <el-form-item v-if="menuIconVisible" label="Icon" prop="icon">
+              <el-input v-model="menuTemp.icon" placeholder="请输入图标名称">
                 <template v-if="menuTemp.icon" slot="append"><svg-icon :icon-class="menuTemp.icon"/></template>
               </el-input>
             </el-form-item>
-            <el-form-item label="排序">
+            <el-form-item v-if="menuOrderVisible" label="order">
               <el-input-number v-model="menuTemp.order" :min="1" :max="20"/>
             </el-form-item>
           </el-form>
@@ -92,7 +111,7 @@ export default {
   data() {
     return {
       type: 'add', // detail add update
-      typeMap: [1, 2, 3],
+      typeMap: [1, 2, 3, 4],
       menuList: null,
       menuLoading: false,
       selectMenuList1: null,
@@ -100,7 +119,9 @@ export default {
       menuTemp: { type: 1, order: 1 },
       menuPidVisible: false,
       menuUrlVisible: false,
+      menuRedirectVisible: true,
       menuIconVisible: true,
+      menuOrderVisible: true,
       menuFormTitle: '',
       menuRules: {
         type: [{ required: true, message: '此项内容不能为空！', trigger: 'change' }],
@@ -108,7 +129,6 @@ export default {
         name: [{ required: true, message: '此项内容不能为空！', trigger: 'blur' }],
         path: [{ required: true, message: '此项内容不能为空！', trigger: 'blur' }],
         url: [{ required: true, message: '此项内容不能为空！', trigger: 'blur' }],
-        icon: [{ required: true, message: '此项内容不能为空！', trigger: 'change' }],
         component: [{ required: true, message: '此项内容不能为空！', trigger: 'change' }]
       }
     }
@@ -156,14 +176,26 @@ export default {
         this.menuPidVisible = false
         this.menuUrlVisible = false
         this.menuIconVisible = true
+        this.menuOrderVisible = true
+        this.menuRedirectVisible = true
       } else if (val === 2) {
         this.menuPidVisible = true
         this.menuUrlVisible = true
         this.menuIconVisible = true
-      } else {
+        this.menuOrderVisible = true
+        this.menuRedirectVisible = true
+      } else if (val === 3) {
+        this.menuPidVisible = true
+        this.menuUrlVisible = true
+        this.menuIconVisible = false
+        this.menuOrderVisible = false
+        this.menuRedirectVisible = false
+      } else if (val === 4) {
         this.menuPidVisible = true
         this.menuUrlVisible = false
         this.menuIconVisible = false
+        this.menuOrderVisible = false
+        this.menuRedirectVisible = false
       }
     }
   },
@@ -179,7 +211,7 @@ export default {
       $http.get('/menu/query?type=2').then(response => {
         this.selectMenuList2 = response.data
       })
-      $http.get('/menu/query?type=3').then(response => {
+      $http.get('/menu/query?type=4').then(response => {
         this.menuList = response.data
         this.menuLoading = false
       })
@@ -203,7 +235,7 @@ export default {
       this.menuTemp = JSON.parse(JSON.stringify(data))
     },
     onSelectMenu(node, instanceId) {
-      if (this.menuType === 3 && node.type === 1) {
+      if ((this.menuType === 3 || this.menuType === 3) && node.type === 1) {
         this.menuTemp.parentId = null
       }
     },

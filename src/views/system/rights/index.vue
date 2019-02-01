@@ -54,6 +54,7 @@
             :expand-on-click-node="false"
             :data="menuList"
             :default-checked-keys="menuChecked"
+            check-strictly="true"
             node-key="id"
             default-expand-all
             show-checkbox
@@ -119,7 +120,7 @@ export default {
   methods: {
     getMenus() {
       this.menuLoading = true
-      $http.get('/menu/query?type=3').then(response => {
+      $http.get('/menu/query?type=4').then(response => {
         this.menuList = response.data
         this.menuLoading = false
       })
