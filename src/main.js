@@ -11,7 +11,7 @@ import Cookies from 'js-cookie'
 import 'element-ui/lib/theme-chalk/index.css'
 import '@riophae/vue-treeselect/dist/vue-treeselect.min.css'
 import '@/styles/index.scss' // global css
-import '@/icons' // icon
+import '@/components/SvgIcon' // icon
 import '@/permission' // permission control
 import '@/utils/btnPermission.js' // btn permission control
 

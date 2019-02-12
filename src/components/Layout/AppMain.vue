@@ -15,7 +15,7 @@ export default {
 </script>
 <style rel="stylesheet/scss" lang="scss">
   .app-main{
-    height: 100%;
+    min-height: calc(100vh - 100px);
     padding-top: 55px;
   }
 </style>

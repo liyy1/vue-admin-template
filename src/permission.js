@@ -48,7 +48,7 @@ function GenerateRoutes(menus) {
     m.name = (menu.children.length > 1) ? menu.name : undefined
     m.path = '/' + menu.path
     m.redirect = menu.redirect
-    m.component = () => import('@/views/layout/Layout')
+    m.component = () => import('@/views/admin/Layout')
     m.meta = { title: menu.name, icon: menu.icon }
     m.children = GenerateRoutes2(menu.children)
     router.options.routes.push(m)

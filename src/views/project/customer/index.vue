@@ -20,12 +20,12 @@
           min-height="600"
           element-loading-text="Loading"
           highlight-current-row>
-          <el-table-column align="center" label="ID" width="60">
+          <el-table-column align="center" label="ID" width="60" fixed>
             <template slot-scope="scope">
               {{ scope.$index + 1 }}
             </template>
           </el-table-column>
-          <el-table-column prop="name" label="客户名称">
+          <el-table-column prop="name" label="客户名称" fixed width="200">
             <template slot-scope="scope">
               <span class="link-type" @click="viewCustomer(scope.row.id)">{{ scope.row.name }}</span>
             </template>
@@ -39,7 +39,7 @@
             </template>
           </el-table-column>
           <el-table-column prop="realname" label="创建人" />
-          <el-table-column label="操作" align="left" width="150" class-name="small-padding fixed-width">
+          <el-table-column label="操作" align="left" width="150" fixed="right" class-name="small-padding fixed-width">
             <template slot-scope="scope">
               <el-button type="primary" size="mini" @click="updateCustomer(scope.row.id)">修改</el-button>
               <el-button v-if="scope.row.delete_flag==0" size="mini" type="danger" @click="deleteCustomer(scope.row.id,1)">删除</el-button>

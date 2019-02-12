@@ -1,7 +1,7 @@
 <template>
-  <el-row :gutter="20" style="padding: 15px;">
+  <el-row style="padding: 15px;">
     <el-col :span="18">
-      <el-card>
+      <el-card style="margin-right: 15px">
         <div>
           <el-form ref="form" :inline="true" :model="queryParams" class="filter-container" size="mini">
             <el-input v-model="queryParams.name" class="filter-item" clearable placeholder="角色名" style="width: 200px" @keyup.enter.native="reloadRole"/>
