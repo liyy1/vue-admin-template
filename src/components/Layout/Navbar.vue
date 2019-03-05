@@ -71,7 +71,7 @@ export default {
   $font-color1: #606266;
   $font-color2: #303133;
   .navbar {
-    z-index: 1;
+    z-index: 99;
     position: fixed;
     height: 55px;
     background-color: #ffffff;

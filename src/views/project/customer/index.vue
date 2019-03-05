@@ -56,7 +56,7 @@
 <script>
 import Treeselect from '@riophae/vue-treeselect'
 import Pagination from '@/components/Pagination'
-import CustomerDialog from '@/views/project/customer/info'
+import CustomerDialog from '@/views/project/customer/info2'
 import $http from '@/utils/request'
 import { parseTime } from '@/utils/index'
 
